@@ -1,9 +1,7 @@
 ############################################################
-# ResearchLab Core v0.1.0
+# ResearchLab Core v0.2
 #
 # Base Image for CFD / Combustion / AI Research
-#
-# Ubuntu 22.04 LTS
 ############################################################
 
 FROM ubuntu:22.04
@@ -15,7 +13,7 @@ FROM ubuntu:22.04
 LABEL maintainer="Bravecaveman-cave"
 LABEL project="ResearchLab"
 LABEL image="core"
-LABEL version="0.1.0"
+LABEL version="0.2.0"
 LABEL description="ResearchLab Core Development Environment"
 
 ############################################################
@@ -33,8 +31,7 @@ ENV LC_ALL=en_US.UTF-8
 # System Packages
 ############################################################
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
+RUN apt-get update --fix-missing && \
     apt-get install -y --no-install-recommends \
     sudo \
     git \
@@ -66,10 +63,10 @@ RUN apt-get update && \
     locales \
     tzdata \
     rsync \
-    software-properties-common \
-    && locale-gen en_US.UTF-8 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    software-properties-common && \
+    locale-gen en_US.UTF-8 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 ############################################################
 # Upgrade pip
@@ -86,30 +83,33 @@ ARG UID=1000
 ARG GID=1000
 
 RUN groupadd --gid ${GID} ${USERNAME} && \
-    useradd --uid ${UID} \
-            --gid ${GID} \
-            --create-home \
-            --shell /bin/bash \
-            ${USERNAME} && \
+    useradd \
+        --uid ${UID} \
+        --gid ${GID} \
+        --create-home \
+        --shell /bin/bash \
+        ${USERNAME} && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME}
 
 ############################################################
 # SSH
 ############################################################
 
-RUN mkdir /var/run/sshd
+RUN mkdir -p /var/run/sshd
 
 ############################################################
 # Workspace
 ############################################################
 
-RUN mkdir -p /workspace && \
+RUN mkdir -p /researchlab && \
+    mkdir -p /workspace && \
     mkdir -p /envs && \
     mkdir -p /opt/researchlab && \
     chown -R ${USERNAME}:${USERNAME} \
-    /workspace \
-    /envs \
-    /opt/researchlab
+        /researchlab \
+        /workspace \
+        /envs \
+        /opt/researchlab
 
 ############################################################
 # Switch User
@@ -117,7 +117,7 @@ RUN mkdir -p /workspace && \
 
 USER ${USERNAME}
 
-WORKDIR /workspace
+WORKDIR /researchlab
 
 ############################################################
 # Python Virtual Environment
@@ -125,6 +125,12 @@ WORKDIR /workspace
 
 RUN python3 -m venv /envs/default && \
     /envs/default/bin/pip install --upgrade pip setuptools wheel
+
+############################################################
+# Default Python Environment
+############################################################
+
+ENV PATH="/envs/default/bin:${PATH}"
 
 ############################################################
 # Bash Configuration
@@ -137,7 +143,7 @@ RUN echo "" >> ~/.bashrc && \
     echo "export OMP_NUM_THREADS=1" >> ~/.bashrc
 
 ############################################################
-# Default
+# Entrypoint
 ############################################################
 
 USER root
@@ -146,6 +152,8 @@ COPY docker/scripts/entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
 
-USER researcher
+USER ${USERNAME}
+
+WORKDIR /researchlab
 
 CMD ["/entrypoint.sh"]
