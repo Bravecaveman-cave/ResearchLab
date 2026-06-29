@@ -24,3 +24,9 @@ venv/
 
 # Jupyter
 .ipynb_checkpoints/
+
+
+# Workspace (host-mounted data)
+workspace/**
+!workspace/.gitkeep
+!workspace/README.md
