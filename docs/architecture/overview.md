@@ -2,33 +2,36 @@
 
 ## Overview
 
-ResearchLab is an open, reproducible and portable computational research platform designed for CFD, combustion, scientific AI and high-performance computing.
+ResearchLab is an open, reproducible and portable computational research platform for CFD, combustion, scientific AI, and high-performance computing (HPC).
 
-The project is built around a layered architecture that separates infrastructure, scientific software, workflows and research outputs.
+The project is designed around a layered architecture that separates infrastructure, scientific software, workflows, and research outputs.
 
 ---
 
-## Architecture
+## Layered Architecture
 
 ```text
-Research
-    ▲
-Workflow
-    ▲
-Scientific Software
-    ▲
-Infrastructure
++----------------------------+
+|        Research            |
++----------------------------+
+|         Workflow           |
++----------------------------+
+|   Scientific Software      |
++----------------------------+
+|      Infrastructure        |
++----------------------------+
 ```
 
 ---
 
 ## Infrastructure
 
-Infrastructure provides the execution environment.
+Infrastructure provides a reproducible execution environment.
 
-Examples:
+Components include:
 
 - Docker
+- Docker Compose
 - Dev Containers
 - Ubuntu
 - CUDA
@@ -38,9 +41,9 @@ Examples:
 
 ## Scientific Software
 
-Scientific applications run on top of the infrastructure.
+Research software is installed on top of the infrastructure.
 
-Examples:
+Examples include:
 
 - OpenFOAM
 - Cantera
@@ -52,15 +55,13 @@ Examples:
 
 ## Workflow
 
-Research workflows integrate multiple software components.
-
-Typical workflow:
+Typical research workflow:
 
 Simulation
 
 ↓
 
-Post Processing
+Post-processing
 
 ↓
 
