@@ -1,0 +1,28 @@
+# Git
+.git
+.github
+
+# IDE
+.vscode
+.idea
+
+# Python
+__pycache__
+*.pyc
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.*
+
+# Research Data
+workspace
+
+# Documents
+docs
+
+# Temporary
+*.tmp
+*.bak

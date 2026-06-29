@@ -1,0 +1,29 @@
+services:
+
+  core:
+
+    build:
+      context: ../..
+      dockerfile: docker/images/base/Dockerfile
+
+    image: researchlab/core:22.04
+
+    container_name: researchlab-core
+
+    hostname: researchlab
+
+    stdin_open: true
+    tty: true
+
+    working_dir: /researchlab
+
+    restart: unless-stopped
+
+    ports:
+      - "2222:22"
+
+    volumes:
+      - ../../:/researchlab
+
+    environment:
+      TZ: Asia/Shanghai

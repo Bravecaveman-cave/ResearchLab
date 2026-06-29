@@ -1,0 +1,13 @@
+{
+    "name": "ResearchLab",
+
+    "dockerComposeFile": [
+        "../docker/compose/compose.yaml"
+    ],
+
+    "service": "core",
+
+    "workspaceFolder": "/researchlab",
+
+    "remoteUser": "researcher"
+}
