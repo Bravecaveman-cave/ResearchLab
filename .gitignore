@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+
+# VSCode
+.vscode/
+
+# Docker
+*.log
+
+# Linux
+*.swp
+
+# Build
+build/
+install/
+
+# Temporary
+tmp/
+
+# Python virtual environments
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
