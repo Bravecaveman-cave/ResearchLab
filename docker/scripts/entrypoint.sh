@@ -1,7 +1,26 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-echo "Starting SSH Server..."
+set -e
 
-sudo service ssh start
+echo "========================================="
+echo "      ResearchLab Core v1.0"
+echo "========================================="
 
-exec /bin/bash
+# Start SSH
+/usr/local/bin/start-ssh.sh
+
+# Print release information
+if [ -f /etc/researchlab-release ]; then
+    cat /etc/researchlab-release
+fi
+
+echo ""
+echo "Workspace : /workspace"
+echo "Research  : /researchlab"
+echo "code-server : http://0.0.0.0:8080"
+echo "SSH         : 22"
+echo "========================================="
+echo ""
+
+# Start code-server (foreground)
+exec /usr/local/bin/start-code-server.sh
