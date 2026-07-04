@@ -90,3 +90,18 @@ Application Layer
 Workspace Layer
     所有镜像共享统一工作目录
     保证源码、数据、结果一致
+
+
+
+    ResearchLab
+├── docker/
+│   ├── images/      # Dockerfile（环境定义）
+│   ├── compose/     # compose
+│   ├── scripts/     # 构建脚本
+│   ├── templates/
+│   └── exports/     # 导出的镜像（不进 Git）
+│
+├── workspace/       # 数据、论文、项目（挂载目录）
+├── docs/
+├── configs/
+└── scripts/

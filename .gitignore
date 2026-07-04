@@ -30,3 +30,15 @@ venv/
 workspace/**
 !workspace/.gitkeep
 !workspace/README.md
+
+# Local image cache
+cache/
+
+# Docker image archives
+*.tar
+*.tar.gz
+*.tgz
+
+# Docker exported images
+docker/exports/
+
